@@ -1,0 +1,26 @@
+<section class="blog-post section-header-offset">
+    <div class="blog-post-container container">
+        <div class="blog-post-data">
+            <h3 class="title blog-post-title">{{ title }}</h3>
+            <div class="article-data">
+                <span>{{ date_post }}</span>
+                {{!-- <span>Dec 6th 2021</span> --}}
+                <span class="article-data-spacer"></span>
+                <span>Por: {{ author.name }}</span>
+            </div>
+            {{#if hasImage}}
+                <img src="{{ imageLandscape }}" alt="">
+            {{/if}}
+        </div>
+        <div class="container">
+            <p>{{ content }}</p>
+            {{!-- <blockquote class="quote">
+                <p><span><i class="ri-double-quotes-l"></i></span> Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit. Officia voluptates, laboriosam voluptatum quos non consequuntur nesciunt necessitatibus
+                    tempora quod inventore corporis rem nihil itaque, at provident minus aliquam veritatis. Labore?
+                    <span><i class="ri-double-quotes-r"></i></span></p>
+            </blockquote> --}}
+            {{> posts/author }}
+        </div>
+    </div>
+</section>

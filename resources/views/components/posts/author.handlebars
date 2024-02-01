@@ -1,0 +1,16 @@
+<div class="author d-grid">
+    <div class="author-image-box">
+        <img src="{{ author.profile_image }}" alt="" class="article-image">
+    </div>
+    <div class="author-about">
+        <h3 class="author-name">{{ author.name }}</h3>
+        <p>{{ author.description }}</p>
+        <ul class="list social-media">
+            {{#each author.social}}
+                <li class="list-item">
+                    <a href="{{ link }}" class="list-link"><i class="{{ icon }}"></i></a>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

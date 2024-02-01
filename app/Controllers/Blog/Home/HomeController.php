@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Blog\Home;
 
+use App\Controllers\Controller;
 use App\Models\UserModel;
 use Src\Http\Request;
 
