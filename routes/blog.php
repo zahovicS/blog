@@ -5,4 +5,4 @@ use App\Controllers\Blog\Posts\PostController;
 use Src\Router\Router;
 
 Router::get("/", [HomeController::class, "index"]);
-Router::get("/post/:slug", [PostController::class, "post"]);
+Router::get("/posts/post/:slug", [PostController::class, "post"]);

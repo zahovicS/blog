@@ -2,6 +2,7 @@
 
 namespace Src\App;
 
+use Carbon\Carbon;
 use Dotenv\Dotenv;
 use Src\Database\Connection;
 use Src\Http\Request;
@@ -25,6 +26,7 @@ class Application
         $this->loadErrors();
         $this->loadSession();
         $this->loadDB();
+        $this->loadLocale();
     }
     private function loadConstants()
     {
@@ -85,6 +87,14 @@ class Application
     private function loadSession(): void
     {
         Session::init();
+    }
+    private function loadLocale(): void
+    {
+        date_default_timezone_set("America/Lima");
+        setlocale(LC_TIME, 'es_PE.UTF-8', 'esp');
+        setlocale(LC_ALL, 'Spanish');
+        Carbon::setLocale("es");
+        Carbon::setUTF8(true);
     }
     public function run()
     {
