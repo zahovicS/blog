@@ -1,0 +1,12 @@
+<div class="see-more-container">
+    <div style="width: 200px;text-align:left">
+        {{#if renderLessPages}}
+            <a href="{{#base_url}}posts/{{#previus_page page}}" class="btn see-more-btn place-items-center"><i class="ri-arrow-left-s-line"></i> Atrás</a>
+        {{/if}}
+    </div>
+    <div style="width: 200px;text-align:right">
+        {{#if renderMorePages}}
+            <a href="{{#base_url}}posts/{{#next_page page}}" class="btn see-more-btn place-items-center">Siguiente <i class="ri-arrow-right-s-line"></i></a>
+        {{/if}}
+    </div>
+</div>

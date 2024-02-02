@@ -1,0 +1,12 @@
+<a href="{{#base_url}}posts/post/{{slug}}" class="article d-grid">
+    <div class="older-posts-article-image-wrapper">
+        <img src="{{#assets post_image}}" alt="imagen" class="article-image">
+    </div>
+    <div class="article-data-container">
+        <div class="article-data">
+            <span>Públicado el: {{#format_date posted_at 'd/m/Y H:i:s'}}</span>
+        </div>
+        <h3 class="title article-title">{{ title }}</h3>
+        <p class="article-description">{{ extract }}</p>
+    </div>
+</a>

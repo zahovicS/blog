@@ -32,7 +32,11 @@ class HandlebarsView
         ]);
 
         $handlebars->addHelper("assets", function($template, $context, $args, $source){
-            return assets($args);
+            return assets($context->get($args));
+        });
+
+        $handlebars->addHelper("next_page", function($template, $context, $args, $source){
+            return intval($context->get($args)) + 1;
         });
 
         $handlebars->addHelper("base_url", function($template, $context, $args, $source){
@@ -40,15 +44,19 @@ class HandlebarsView
         });
 
         $handlebars->addHelper("route", function($template, $context, $args, $source){
-            return route($args);
+            return route($context->get($args));
         });
 
         $handlebars->addHelper("encrypt", function($template, $context, $args, $source){
-            return encrypt($args);
+            return encrypt($context->get($args));
         });
 
         $handlebars->addHelper("dd", function($template, $context, $args, $source){
-            return dd($args);
+            return dd($context->get($args));
+        });
+
+        $handlebars->addHelper("previus_page", function($template, $context, $args, $source){
+            return intval($context->get($args)) - 1;
         });
 
         # Will render the model to the templates/main.tpl template

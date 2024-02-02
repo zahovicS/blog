@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action=''>
+    <textarea id="content_post"></textarea>
+</form>
+
+<!-- Place the first <script> tag in your HTML's <head> -->
+<script src="{{#assets}}editors/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({ selector: 'textarea#content_post',
+    tinycomments_mode: 'embedded',
+    plugins:  'autolink autoresize autosave fullscreen media table visualblocks wordcount pagebreak',
+    toolbar: 'undo redo | styles | bold italic | ' +
+    'alignleft aligncenter alignright alignjustify | ' +
+    'outdent indent | numlist bullist | fullscreen visualblocks wordcount pagebreak media table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+    min_height: 200
+    });
+</script>
+</body>
+</html>

@@ -528,6 +528,8 @@ body.light-theme{
 
 .see-more-container{
     padding-top: var(--margin-md);
+    display: flex;
+    justify-content: space-between;
 }
 
 .see-more-btn{
@@ -689,6 +691,8 @@ body.light-theme{
 
 .quote p{
     font-style: italic;
+    word-break: break-all;
+    white-space: normal;
 }
 
 .quote span{

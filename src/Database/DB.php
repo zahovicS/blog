@@ -14,6 +14,7 @@ class DB
     protected $wheres = "";
     protected $limits = "";
     protected $joins = "";
+    protected $ordersBy = "";
     protected $sql = null;
 
     public function getConnection()
@@ -28,7 +29,7 @@ class DB
     {
         $this->getConnection();
         try {
-            $this->sql = trim("SELECT {$this->selects} FROM {$this->table} {$this->joins} {$this->wheres} {$this->limits};");
+            $this->sql = trim("SELECT {$this->selects} FROM {$this->table} {$this->joins} {$this->wheres} {$this->ordersBy} {$this->limits};");
             $sth = $this->connection->prepare($this->sql);
             $sth->execute();
             $this->reiniciarValores();
@@ -43,7 +44,7 @@ class DB
         $this->getConnection();
         try {
             $this->limit(1);
-            $this->sql = trim("SELECT{$this->selects} FROM {$this->table} {$this->joins} {$this->wheres} {$this->limits};");
+            $this->sql = trim("SELECT{$this->selects} FROM {$this->table} {$this->joins} {$this->wheres} {$this->ordersBy} {$this->limits};");
             $sth = $this->connection->prepare($this->sql);
             $sth->execute();
             $this->reiniciarValores();
@@ -132,7 +133,10 @@ class DB
     {
         $this->limits = "LIMIT {$limit}";
     }
-
+    public function orderBy(string $column, string $order = "ASC"){
+        $this->ordersBy .= strpos($this->ordersBy, "ORDER BY") !== false ? ",{$column} {$order}" : "ORDER BY {$column} {$order}";
+        return $this;
+    }
     public function where(string $column, string $operator, $value)
     {
         $this->wheres .= (strpos($this->wheres, "WHERE")) ? " AND " : " WHERE ";
@@ -170,6 +174,7 @@ class DB
         $this->sql = null;
         $this->limits = "";
         $this->joins = "";
+        $this->ordersBy = "";
     }
     public function paginate($page = 1, $limit = 10)
     {
@@ -179,17 +184,19 @@ class DB
             $this->limits = "LIMIT {$offset},{$limit}";
             $rows = $this->connection->query("SELECT COUNT(*) FROM {$this->table} {$this->wheres};")->fetchColumn();
             $pages = ceil($rows / $limit);
-            $this->sql = "SELECT * FROM {$this->table} {$this->wheres} {$this->limits};";
+            $this->sql = "SELECT * FROM {$this->table} {$this->wheres} {$this->ordersBy} {$this->limits};";
             $sth = $this->connection->prepare($this->sql);
             $sth->execute();
             $this->reiniciarValores();
             $data = $sth->fetchAll();
             return [
                 'data' => $data,
-                'page' => $page,
-                'limit' => $limit,
-                'pages' => $pages,
-                'rows' => $rows,
+                'page' => (int) $page,
+                'limit' => (int) $limit,
+                'pages' => (int) $pages,
+                'renderLessPages' => ($page - 1) > 0,
+                'renderMorePages' => ($page + 1) <= $pages,
+                'rows' => (int) $rows,
             ];
         } catch (PDOException $exc) {
             echo $exc->getTraceAsString();

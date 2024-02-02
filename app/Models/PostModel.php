@@ -13,7 +13,7 @@ class PostModel extends DB
     public function getPostBySlug(string $slug): array
     {
         $userModel = new UserModel;
-        $socialModel = new SocialModel; 
+        $socialModel = new SocialModel;
         $post = $this->where("slug", "=", $slug)->first();
         if (!$post) {
             throw new Exception("No POST exists", 1);
@@ -25,6 +25,8 @@ class PostModel extends DB
         }
         $author = $userModel->setToDTO($author);
         $socialUser = $socialModel->getSocialsByUser($author->id);
+        $content = str_replace(["\r\n", "\r", "\n", "\\n"], "<br/>", $post->content);
+        $content = $this->replaceQuotes($content);
         return [
             "title" => $post->title,
             "titleHTML" => $post->title,
@@ -37,11 +39,18 @@ class PostModel extends DB
             ],
             "hasImage" => $post->header_image ?? false,
             "imageLandscape" => $post->header_image ? assets($post->header_image) : null,
-            "content" => $post->content
+            "content" => $content
         ];
     }
     public function setToDTO(array $post): PostDTO
     {
         return new PostDTO($post["id"] ?? null, $post["id_user"], $post["header_image"], $post["title"], $post["slug"], $post["content"], $post["posted_at"]);
+    }
+
+    private function replaceQuotes($content){
+        $content = str_replace("<blockquote>",'<blockquote class="quote"><p><span><i class="ri-double-quotes-l"></i></span>', $content);
+        $content = str_replace("</blockquote>",'<span><i class="ri-double-quotes-r"></i></span></p></blockquote>', $content);
+        $content = preg_replace('/<br\s*\/?>\s*<span/', '<span', $content);
+        return $content;
     }
 }
