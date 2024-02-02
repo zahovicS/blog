@@ -59,7 +59,18 @@ function view(string $template, array $data = [])
 {
     return (new View)->render($template, $data);
 }
-
+function urlIs(string $route = "")
+{
+    if($route == "/") return true;
+    return cleanUri($_GET['uri'] ?? "/") === $route;
+}
+function cleanUri(string $uri)
+{
+    if ($uri === "/") return $uri;
+    $hashLast = substr($uri, -1) === "/";
+    if ($hashLast) return substr($uri, 0, -1);
+    return "/{$uri}";
+}
 function viewHandlebars(string $template, array $data = [])
 {
     return (new HandlebarsView)->render($template, $data);
